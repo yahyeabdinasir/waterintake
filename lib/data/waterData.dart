@@ -22,23 +22,26 @@ class Waterdata extends ChangeNotifier {
         }));
 
 
-    Future<List<Watermodel>> Getwatermodel () async {
-      var url = Uri.parse("water-intake-fdba7-default-rtdb.firebaseio.com", "water.json");
+
+    Future<List<Watermodel>> Getwatermodel() async {
+      var url = Uri.https("water-intake-fdba7-default-rtdb.firebaseio.com" , "water.json");
       var results = await http.get(url);
       if (results.statusCode == 200 && results.body != 'null') {
         var extractData = json.decode(results.body) as Map<String, dynamic>;
-        {
-          for (var items in extractData.entries) {
-            WaterListProvider.add(Watermodel(
-                amount: items.value['amount'],
-                dateTime: DateTime.parse(items.value['dateTime']),
-                unit: items.value['unit']),
 
-            );
-          };
+        for (var items in extractData.entries) {
+          WaterListProvider.add(Watermodel(
+              amount: items.value['amount'],
+              dateTime: DateTime.parse(items.value['dateTime']),
+              unit: items.value['unit']),
+
+          );
         };
+      };
 
-        notifyListeners();
-        return WaterListProvider;
-      }
-    };}}
+      notifyListeners();
+      return WaterListProvider;
+    }
+
+  return   WaterListProvider;
+}
