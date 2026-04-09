@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:untitled/model/waterModel.dart';
+
 import 'dart:convert';
+
+import 'package:untitled/model/waterModel.dart';
 
 
 class Waterdata extends ChangeNotifier {
@@ -22,9 +24,9 @@ class Waterdata extends ChangeNotifier {
         }));
 
 
-
     Future<List<Watermodel>> Getwatermodel() async {
-      var url = Uri.https("water-intake-fdba7-default-rtdb.firebaseio.com" , "water.json");
+      var url = Uri.https(
+          "water-intake-fdba7-default-rtdb.firebaseio.com", "water.json");
       var results = await http.get(url);
       if (results.statusCode == 200 && results.body != 'null') {
         var extractData = json.decode(results.body) as Map<String, dynamic>;
@@ -41,7 +43,6 @@ class Waterdata extends ChangeNotifier {
 
       notifyListeners();
       return WaterListProvider;
-    }
-
-  return   WaterListProvider;
+    };
+  }
 }
