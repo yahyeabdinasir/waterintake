@@ -18,31 +18,37 @@ class Waterdata extends ChangeNotifier {
 
     },
         body: json.encode({
-          "water": double.parse(water.amount.toString()),
+          "amount": double.parse(water.amount.toString()),
           "unit": "ml",
-          "time": DateTime.now().toIso8601String()
+          "dateTime": DateTime.now().toIso8601String()
         }));
 
-
-    Future<List<Watermodel>> Getwatermodel() async {
+  }
+    Future<List<Watermodel>> getwatermodel() async {
       var url = Uri.https(
           "water-intake-fdba7-default-rtdb.firebaseio.com", "water.json");
       var results = await http.get(url);
+      print("this is the result of the api $results");
       if (results.statusCode == 200 && results.body != 'null') {
         var extractData = json.decode(results.body) as Map<String, dynamic>;
 
+        WaterListProvider.clear();
         for (var items in extractData.entries) {
+          print("this is the items $items");
           WaterListProvider.add(Watermodel(
-              amount: items.value['amount'],
+              amount: (items.value['amount'] as num).toDouble(),
               dateTime: DateTime.parse(items.value['dateTime']),
               unit: items.value['unit']),
 
+
           );
         };
+
       };
 
       notifyListeners();
       return WaterListProvider;
-    };
+
+    }
+
   }
-}
