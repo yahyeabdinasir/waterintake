@@ -28,18 +28,15 @@ class Waterdata extends ChangeNotifier {
     if (results.statusCode == 200) {
       final extrectedData = jsonDecode(results.body) as Map<String, dynamic>;
       {
-
-          WaterListProvider.add(
-            Watermodel(
-              id: extrectedData['name'],
-              amount: water.amount,
-              unit: water.unit,
-              dateTime: water.dateTime,
-            ),
-          );
-
-        }
-
+        WaterListProvider.add(
+          Watermodel(
+            id: extrectedData['name'],
+            amount: water.amount,
+            unit: water.unit,
+            dateTime: water.dateTime,
+          ),
+        );
+      }
 
       ;
     } else {
@@ -82,7 +79,6 @@ class Waterdata extends ChangeNotifier {
     var url = Uri.https(
       "water-intake-fdba7-default-rtdb.firebaseio.com",
       "water/${watermodel.id}.json",
-      
     );
     print("Deleting ID: ${watermodel.id}");
     final response = await http.delete(url);
@@ -95,6 +91,36 @@ class Waterdata extends ChangeNotifier {
       print("something went wrong");
     }
   }
+
+
+Future<void> updateWater(Watermodel water) async {
+  final  url = Uri.http(
+    "water-intake-fdba7-default-rtdb.firebaseio.com",
+    "water/${water.id}.json",
+  );
+  var response = await http.patch(
+    url ,
+
+    headers: {"Content-Type": "application/json"},
+    body: json.encode({
+      "amount": double.parse(water.amount.toString()),
+      "unit": "ml",
+      "dateTime": DateTime.now().toIso8601String(),
+    }),
+  );
+  print("Update Status: ${response.statusCode}");
+  if (response.statusCode == 200)  {
+    final index =
+    WaterListProvider.indexWhere((e) => e.id == water.id);
+    if (index != -1){
+      WaterListProvider[index] = water ;
+      notifyListeners();
+
+    }
+    else {
+      print("Update failed");
+    }
+
+  }
 }
-
-
+}
