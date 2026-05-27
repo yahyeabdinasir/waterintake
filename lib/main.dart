@@ -20,8 +20,9 @@ class MyApp extends StatelessWidget {
 
       child: MaterialApp(
         title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
         ),
         home: const Home(),
       ),
