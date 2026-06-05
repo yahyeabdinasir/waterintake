@@ -30,13 +30,12 @@ class CardScreen extends StatelessWidget {
         ),
 
         subtitle: Text(watermodel.dateTime.toString()),
-        trailing: IconButton(onPressed: (){
-          print("UI ID: ${watermodel.id}");
-          Provider.of<Waterdata>(context , listen: false).delete(watermodel);
-
-
-
-        }, icon: Icon(Icons.delete),
+        trailing: IconButton(
+          onPressed: () {
+            print("UI ID: ${watermodel.id}");
+            Provider.of<Waterdata>(context, listen: false).delete(watermodel);
+          },
+          icon: Icon(Icons.delete),
         ),
         onTap: () {
           isDetails

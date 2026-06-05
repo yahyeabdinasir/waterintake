@@ -14,6 +14,11 @@ class Detailedpage extends StatelessWidget {
         body: Column(
           children: [
          CardScreen(watermodel: property , isDetails: false, ) ,
+            IconButton(onPressed: () {
+
+
+
+            }, icon: Icon(Icons.edit))
           ],
 
 

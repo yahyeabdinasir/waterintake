@@ -60,7 +60,7 @@ class _MyDesingState extends State<MyDesing> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("add water to your daily intake"),
+            Text("your daily water"),
             SizedBox(height: 20),
             TextField(
               textAlign: TextAlign.center,
@@ -109,7 +109,6 @@ class _MyDesingState extends State<MyDesing> {
           actions: [
             IconButton(
               onPressed: () {
-                print("hello map ");
               },
               icon: Icon(Icons.map),
             ),
